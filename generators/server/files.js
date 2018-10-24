@@ -323,7 +323,9 @@ const serverFiles = {
     serverJavaAuthConfig: [
         {
             condition: generator =>
-                generator.databaseType === 'sql' || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase',
+                !generator.skipSecurity && (
+                    generator.databaseType === 'sql' || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase'
+                ),
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
@@ -333,6 +335,7 @@ const serverFiles = {
             ]
         },
         {
+            condition: generator => !generator.skipSecurity,
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
@@ -375,6 +378,7 @@ const serverFiles = {
         },
         {
             condition: generator =>
+                !generator.skipSecurity &&
                 !generator.reactive &&
                 (generator.applicationType === 'microservice' ||
                     (generator.applicationType !== 'uaa' &&

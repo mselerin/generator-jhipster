@@ -38,6 +38,7 @@ function askForModuleName() {
 function askForServerSideOpts(meta) {
     if (!meta && this.existingProject) return;
 
+    const skipSecurity = this.skipSecurity;
     const applicationType = this.applicationType;
     const reactive = this.reactive;
     let defaultPort = applicationType === 'gateway' ? '8080' : '8081';
@@ -105,8 +106,10 @@ function askForServerSideOpts(meta) {
         },
         {
             when: response =>
-                (applicationType === 'monolith' && response.serviceDiscoveryType !== 'eureka') ||
-                ['gateway', 'microservice'].includes(applicationType),
+                !skipSecurity && (
+                    (applicationType === 'monolith' && response.serviceDiscoveryType !== 'eureka') ||
+                    ['gateway', 'microservice'].includes(applicationType)
+                ),
             type: 'list',
             name: 'authenticationType',
             message: `Which ${chalk.yellow('*type*')} of authentication would you like to use?`,
@@ -309,6 +312,11 @@ function askForServerSideOpts(meta) {
 
         if (this.applicationType === 'uaa') {
             this.authenticationType = 'uaa';
+        }
+
+        if (this.skipSecurity) {
+            this.authenticationType = 'none';
+            this.skipUserManagement = true;
         }
 
         this.packageName = props.packageName;

@@ -2909,6 +2909,10 @@ module.exports = class extends PrivateBase {
         dest.skipClient = !context.options['client-hook'] || context.configOptions.skipClient || context.config.get('skipClient');
         dest.skipUserManagement =
             context.configOptions.skipUserManagement || context.options['skip-user-management'] || context.config.get('skipUserManagement');
+
+        dest.skipSecurity =
+            context.configOptions.skipSecurity || context.options['skip-security'] || context.config.get('skipSecurity');
+
         dest.enableTranslation = context.options.i18n || context.configOptions.enableTranslation || context.config.get('enableTranslation');
         dest.testFrameworks = [];
 

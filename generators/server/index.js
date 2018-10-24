@@ -76,6 +76,13 @@ module.exports = class extends BaseGenerator {
             defaults: false
         });
 
+        // This adds support for a `--skip-security` flag
+        this.option('skip-security', {
+            desc: 'Skip the security module during app generation',
+            type: Boolean,
+            defaults: false
+        });
+
         // This adds support for a `--experimental` flag which can be used to enable experimental features
         this.option('experimental', {
             desc:
