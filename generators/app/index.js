@@ -70,6 +70,13 @@ module.exports = class extends BaseGenerator {
             defaults: false
         });
 
+        // This adds support for a `--skip-security` flag
+        this.option('skip-security', {
+            desc: 'Skip the security module during app generation',
+            type: Boolean,
+            defaults: false
+        });
+
         // This adds support for a `--skip-check-length-of-identifier` flag
         this.option('skip-check-length-of-identifier', {
             desc: 'Skip check the length of the identifier, only for recent Oracle databases that support 30+ characters metadata',
@@ -140,6 +147,7 @@ module.exports = class extends BaseGenerator {
 
         this.skipClient = this.configOptions.skipClient = this.options['skip-client'] || this.config.get('skipClient');
         this.skipServer = this.configOptions.skipServer = this.options['skip-server'] || this.config.get('skipServer');
+        this.skipSecurity = this.configOptions.skipSecurity = this.options['skip-security'] || this.config.get('skipSecurity');
         this.skipUserManagement = this.configOptions.skipUserManagement =
             this.options['skip-user-management'] || this.config.get('skipUserManagement');
         this.skipCheckLengthOfIdentifier = this.configOptions.skipCheckLengthOfIdentifier =
