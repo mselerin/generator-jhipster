@@ -18,6 +18,7 @@
  */
 /* eslint-disable consistent-return */
 const _ = require('lodash');
+const chalk = require('chalk');
 const BaseBlueprintGenerator = require('../generator-base-blueprint');
 const constants = require('../generator-constants');
 const statistics = require('../statistics');
@@ -61,7 +62,13 @@ module.exports = class extends BaseBlueprintGenerator {
     _initializing() {
         return {
             validateFromCli() {
-                this.checkInvocationFromCLI();
+                if (!this.options['from-cli']) {
+                    this.warning(
+                        `Deprecated: JHipster seems to be invoked using Yeoman command. Please use the JHipster CLI. Run ${chalk.red(
+                            'jhipster <command>'
+                        )} instead of ${chalk.red('yo jhipster:<command>')}`
+                    );
+                }
             },
 
             initializing() {
