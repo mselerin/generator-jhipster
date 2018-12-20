@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 /* eslint-disable consistent-return */
-const chalk = require('chalk');
 const BaseBlueprintGenerator = require('../generator-base-blueprint');
 const writeFiles = require('./files').writeFiles;
 const constants = require('../generator-constants');
@@ -57,11 +56,7 @@ module.exports = class extends BaseBlueprintGenerator {
         return {
             validateFromCli() {
                 if (!this.options['from-cli']) {
-                    this.warning(
-                        `Deprecated: JHipster seems to be invoked using Yeoman command. Please use the JHipster CLI. Run ${chalk.red(
-                            'jhipster <command>'
-                        )} instead of ${chalk.red('yo jhipster:<command>')}`
-                    );
+                    this.error('This JHipster subgenerator is not intented for standalone use.');
                 }
             },
 
