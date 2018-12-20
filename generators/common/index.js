@@ -19,7 +19,6 @@
 /* eslint-disable consistent-return */
 const BaseBlueprintGenerator = require('../generator-base-blueprint');
 const writeFiles = require('./files').writeFiles;
-const prettierConfigFiles = require('./files').prettierConfigFiles;
 const constants = require('../generator-constants');
 
 let useBlueprint;
@@ -81,6 +80,16 @@ module.exports = class extends BaseBlueprintGenerator {
     }
 
     // Public API method used by the getter and also by Blueprints
+    _prompting() {
+        return {};
+    }
+
+    get prompting() {
+        if (useBlueprint) return;
+        return this._prompting();
+    }
+
+    // Public API method used by the getter and also by Blueprints
     _default() {
         return {
             getSharedConfigOptions() {
@@ -92,10 +101,6 @@ module.exports = class extends BaseBlueprintGenerator {
                 this.useSass = this.configOptions.useSass;
                 this.protractorTests = this.testFrameworks.includes('protractor');
                 this.gatlingTests = this.testFrameworks.includes('gatling');
-            },
-            writePrettierConfig() {
-                // Prettier configuration needs to be the first written files - all subgenerators considered - for prettier transform to work
-                this.writeFilesToDisk(prettierConfigFiles, this, false, this.fetchFromInstalledJHipster('common/templates'));
             }
         };
     }

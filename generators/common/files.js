@@ -21,18 +21,12 @@
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
-const prettierConfigFiles = {
-    global: [
-        {
-            templates: ['.prettierrc', '.prettierignore']
-        }
-    ]
-};
-
 const commonFiles = {
     global: [
         {
             templates: [
+                '.prettierrc', // this needs to be the first file for prettier transform to work
+                '.prettierignore',
                 'README.md',
                 {
                     file: 'gitignore',
@@ -63,6 +57,5 @@ function writeFiles() {
 
 module.exports = {
     writeFiles,
-    prettierConfigFiles,
     commonFiles
 };
